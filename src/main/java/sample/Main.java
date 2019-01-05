@@ -19,6 +19,13 @@ public class Main {
     public static void main(String[] args) {
         // Primjer upotrebe
 
+        // Svaka upotreba servisa treba da prati pattern:
+        // FakultetApi api = FakultetApi.<keriraj dao koji ti treba>
+        // ... koristi api...
+        // api.close(), nakon cega se api vise NE SMIJE KORISTITI, dok se opet ne instancira.
+        // api = null; - da osiguramo ovo iznad.
+
+
         // napravimo servis koji koristi bazu
         FakultetApi api = FakultetApi.createSqliteApi();
         // a mogli bi koristiti i XML

@@ -11,6 +11,7 @@ interface FakultetDAO {
     Student getStudentById(long id);
     Ocjena getOcjenaById(long id);
 
+
     List<Ocjena> getOcjeneByIndeks(long indeksId);
     List<Ocjena> getOcjeneByIndeks(Indeks indeks);
 

@@ -14,16 +14,7 @@ import java.util.List;
 // Note 2 - u ovoj implementaciji ima prilicno dosta dupliciranja koda. Ovo bi izbjegli pomocu funkcija koje bi dinamicki generisale SQL (kroz neke pomocne objekte), specificno WHERE dio query-a. Opet, cilj nam je da minimiziramo kompleksnost implementacije.
 // Note 3 - ova klasa NAMJERNO NIJE PUBLIC!! Pogledaj klasu FakultetApi za detaljnije...
 class FakultetSqliteDAO implements FakultetDAO {
-    private static FakultetSqliteDAO instance;
-
     private static final String URL = "jdbc:sqlite:baza.db";
-
-    public static FakultetSqliteDAO getInstance() {
-        if ( instance == null ) {
-            instance = new FakultetSqliteDAO();
-        }
-        return instance;
-    }
 
     private Connection conn;
 
@@ -51,7 +42,7 @@ class FakultetSqliteDAO implements FakultetDAO {
     }
 
 
-    private FakultetSqliteDAO() {
+    public FakultetSqliteDAO() {
         try {
             conn = DriverManager.getConnection(URL);
         } catch (SQLException e) {
@@ -504,9 +495,9 @@ class FakultetSqliteDAO implements FakultetDAO {
     public void close() {
         try {
             conn.close();
+            conn = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        instance = null;
     }
 }

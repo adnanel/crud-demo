@@ -10,7 +10,7 @@ import java.util.List;
 // razlog je sto ne zelimo da se van ovog paketa (sample.api) koristi DAO, nego iskljucivo ova API klasa.
 public class FakultetApi {
     public static FakultetApi createSqliteApi() {
-        return new FakultetApi(FakultetSqliteDAO.getInstance());
+        return new FakultetApi(new FakultetSqliteDAO());
     }
     public static FakultetApi createXmlApi() {
         // ToDo - vjezba za studente - implementirajte FakultetXmlDAO
@@ -50,6 +50,12 @@ public class FakultetApi {
     public Student getStudentById(long id) {
         return dao.getStudentById(id);
     }
+    // iako se ovo cini kao viska kod, servis u ovom slucaju sluzi da ubacimo jedan ZAJEDNICKI layer za sve DAO-e
+    // odnosno, mozemo sutra imati 10 DAO-a (sqlite, xml, oracle, mysql, ...)
+    // i u svakom ce biti getStudentById(), i ova metoda iznad ce pozvati tu metodu kod trenutno podesenog DAO-a.
+    // Sada se postavlja problem - sta ako ce se ponasanje te metode nekako izmjeniti? treba provjeriti da li je neki uvjet
+    // ispunjen, ako nije da vrati null, iako taj student postoji. Da ne bi morali mijenjati svih 10 DAO-a, dobra je stvar
+    // sto imamo servis u koji upravo to treba da se radi (jer je to ipak servisna logika).
 
     public Indeks getIndeksById(long id) {
         return dao.getIndeksById(id);
