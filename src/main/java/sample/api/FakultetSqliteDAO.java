@@ -438,7 +438,7 @@ class FakultetSqliteDAO implements FakultetDAO {
     public boolean deleteIndeks(long id) {
         PreparedStatement stmt = null;
         try {
-            boolean exists = getOcjenaById(id) != null;
+            boolean exists = getIndeksById(id) != null;
             if ( exists ) {
                 stmt = conn.prepareStatement("delete from indeks where id = ?");
                 stmt.setLong(1, id);
